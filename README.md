@@ -4,9 +4,6 @@
 ![PHP](https://img.shields.io/badge/php-%3E=8.0-blue)
 ![Made by tendayspace](https://img.shields.io/badge/made%20by-tendayspace-blueviolet)
 
-**MockImage** 是一个用 PHP 编写的本地占位图生成器，可快速生成带文字、背景色、文字颜色和水印的占位图，并支持缓存。
-
-
 **MockImage** 是一个用 PHP 8 编写的本地占位图（Placeholder Image）生成器，灵感来源于 [dummyimage.com](https://dummyimage.com/)，支持动态尺寸、背景颜色、文字颜色、文本内容，并自动缓存为 JPG 图像，右下角附加 "tendayspace" 水印。
 
 ---
@@ -66,6 +63,28 @@ http://yourdomain.com/{width}x{height}/{text}/{bg_color}/{text_color}
 | `{bg_color}`       | ❌       | 背景色（默认 `cccccc`）               |
 | `{text_color}`     | ❌       | 字体颜色（默认 `000000`）             |
 
+---
+
+## 🌐 去除 index.php 的访问路径
+
+### ✅ Nginx 重写设置
+在你的 `server` 配置中加入：
+```nginx
+location / {
+    try_files $uri /index.php?$args;
+}
+```
+确保 `root` 指向 MockImage 项目目录，PHP FastCGI 配置正常。
+
+### ✅ Apache 设置（.htaccess）
+在项目根目录添加 `.htaccess` 文件：
+```apacheconf
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+```
+确保 Apache 开启了 `mod_rewrite` 模块，并允许 `.htaccess` 重写（`AllowOverride All`）。
 
 ---
 
@@ -74,13 +93,11 @@ http://yourdomain.com/{width}x{height}/{text}/{bg_color}/{text_color}
 - 存储于 `/cache` 文件夹中，命名包含尺寸、颜色和文字哈希
 - 后续访问相同参数时直接读取缓存，加速响应
 
-
 ---
 
 ## 🖋️ 水印说明
 - 默认右下角显示 `tendayspace` 标志
 - 字体颜色较淡（半透明）
-
 
 ---
 
