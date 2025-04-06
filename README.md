@@ -3,6 +3,7 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![PHP](https://img.shields.io/badge/php-%3E=8.0-blue)
 ![Made by tendayspace](https://img.shields.io/badge/made%20by-tendayspace-blueviolet)
+![Stargazers over time](https://starchart.cc/tendayspace/MockImage.svg)
 
 **MockImage** 是一个用 PHP 8 编写的本地占位图（Placeholder Image）生成器，灵感来源于 [dummyimage.com](https://dummyimage.com/)，支持动态尺寸、背景颜色、文字颜色、文本内容，并自动缓存为 JPG 图像，右下角附加 "tendayspace" 水印。
 
