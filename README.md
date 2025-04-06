@@ -1,6 +1,13 @@
-# Pholder
+# MockImage
 
-**Pholder** 是一个用 PHP 8 编写的本地占位图（Placeholder Image）生成器，灵感来源于 [dummyimage.com](https://dummyimage.com/)，支持动态尺寸、背景颜色、文字颜色、文本内容，并自动缓存为 JPG 图像，右下角附加 "tendayspace" 水印。
+![License](https://img.shields.io/badge/license-MIT-green)
+![PHP](https://img.shields.io/badge/php-%3E=8.0-blue)
+![Made by tendayspace](https://img.shields.io/badge/made%20by-tendayspace-blueviolet)
+
+**MockImage** 是一个用 PHP 编写的本地占位图生成器，可快速生成带文字、背景色、文字颜色和水印的占位图，并支持缓存。
+
+
+**MockImage** 是一个用 PHP 8 编写的本地占位图（Placeholder Image）生成器，灵感来源于 [dummyimage.com](https://dummyimage.com/)，支持动态尺寸、背景颜色、文字颜色、文本内容，并自动缓存为 JPG 图像，右下角附加 "tendayspace" 水印。
 
 ---
 
@@ -12,7 +19,7 @@
 
 ### 📁 文件结构
 ```
-pholder/
+mockimage/
 ├── index.php           # 主入口文件
 ├── cache/              # 自动生成的缓存图像
 ├── arial.ttf           # 字体文件（需手动放置）
@@ -24,8 +31,8 @@ pholder/
 ### 📦 安装步骤
 ```bash
 # 克隆项目
-$ git clone https://github.com/yourname/pholder.git
-$ cd pholder
+$ git clone https://github.com/yourname/mockimage.git
+$ cd mockimage
 
 # 准备字体文件（例如从系统复制）
 $ cp /usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf arial.ttf
