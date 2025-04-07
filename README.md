@@ -5,101 +5,107 @@
 ![Made by tendayspace](https://img.shields.io/badge/made%20by-tendayspace-blueviolet)
 ![GitHub stars](https://img.shields.io/github/stars/tendayspace/MockImage?style=social)
 
-
 **MockImage** 是一个用 PHP 8 编写的本地占位图（Placeholder Image）生成器，灵感来源于 [dummyimage.com](https://dummyimage.com/)，支持动态尺寸、背景颜色、文字颜色、文本内容，并自动缓存为 JPG 图像，右下角附加 "tendayspace" 水印。
+
+**MockImage** is a lightweight image placeholder generator written in PHP 8, inspired by [dummyimage.com](https://dummyimage.com/). It supports dynamic size, background color, text color, text content, and outputs JPG images with automatic caching and bottom-right watermark.
 
 ---
 
-## 🚀 快速开始
+## 🌐 语言 / Language
 
-### ✅ 环境需求
+- [🇨🇳 中文说明](#快速开始)
+- [🇬🇧 English Guide](#quick-start)
+
+---
+
+## 🚀 快速开始 / Quick Start
+
+### ✅ 环境需求 / Requirements
 - PHP 8.0+
-- GD 扩展启用（默认启用）
+- GD 扩展已启用 / GD extension enabled
 
-### 📁 文件结构
+### 📁 文件结构 / File Structure
 ```
 mockimage/
-├── index.php           # 主入口文件
-├── cache/              # 自动生成的缓存图像
-├── arial.ttf           # 字体文件（需手动放置）
+├── index.php           # 主入口 / Entry point
+├── cache/              # 自动缓存图片 / Cached images
+├── arial.ttf           # 字体文件 / Font file
 ├── README.md
 ├── LICENSE
 └── .gitignore
 ```
 
-### 📦 安装步骤
+### 📦 安装步骤 / Installation
 ```bash
-# 克隆项目
-$ git clone https://github.com/yourname/mockimage.git
-$ cd mockimage
+# 克隆项目 / Clone the project
+$ git clone https://github.com/tendayspace/MockImage.git
+$ cd MockImage
 
-# 准备字体文件（例如从系统复制）
+# 准备字体文件 / Prepare a font file
 $ cp /usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf arial.ttf
 
-# 创建缓存目录
+# 创建缓存目录 / Create cache directory
 $ mkdir cache && chmod 777 cache
 ```
 
 ---
 
-## 🔍 使用示例
+## 🔍 使用示例 / Usage Example
 
 ```
 http://yourdomain.com/{width}x{height}/{text}/{bg_color}/{text_color}
 ```
 
-### 示例链接：
-| 链接 | 说明 |
-|------|------|
-| `/600x400` | 默认灰底黑字，显示文字为 `600x400` |
-| `/400x300/Hello` | 灰底黑字，显示文字为 `Hello` |
-| `/300x300/Hi/000/fff` | 黑底白字，显示文字为 `Hi` |
+### 示例链接 / Sample Links
+| 链接 / URL | 说明 / Description |
+|------------|--------------------|
+| `/600x400` | 默认灰底黑字，显示文字为 `600x400` <br> Gray background, black text, shows "600x400" |
+| `/400x300/Hello` | 灰底黑字，显示 "Hello" <br> Gray background, text = Hello |
+| `/300x300/Hi/000/fff` | 黑底白字，文字 "Hi" <br> Black background, white text "Hi" |
 
 ---
 
-## ⚙️ 参数说明
-| 参数         | 是否必需 | 说明                             |
-|--------------|----------|----------------------------------|
-| `{width}x{height}` | ✅       | 图片尺寸                           |
-| `{text}`           | ❌       | 显示文字，默认显示尺寸值               |
-| `{bg_color}`       | ❌       | 背景色（默认 `cccccc`）               |
-| `{text_color}`     | ❌       | 字体颜色（默认 `000000`）             |
+## ⚙️ 参数说明 / Parameters
+| 参数 / Param         | 必需 / Required | 说明 / Description |
+|----------------------|------------------|---------------------|
+| `{width}x{height}`   | ✅ 是 / Yes       | 图片尺寸 / Image size |
+| `{text}`             | ❌ 否 / No        | 显示文字 / Text to display |
+| `{bg_color}`         | ❌ 否 / No        | 背景颜色 / Background color (default `cccccc`) |
+| `{text_color}`       | ❌ 否 / No        | 字体颜色 / Text color (default `000000`) |
 
 ---
 
-## 🌐 去除 index.php 的访问路径
+## 🌐 去除 index.php 的访问路径 / Remove index.php from URLs
 
-### ✅ Nginx 重写设置
-在你的 `server` 配置中加入：
+### ✅ Nginx 重写 / Nginx Rewrite
 ```nginx
 location / {
     try_files $uri /index.php?$args;
 }
 ```
-确保 `root` 指向 MockImage 项目目录，PHP FastCGI 配置正常。
+Ensure your `root` points to the MockImage directory, and PHP FastCGI is properly set.
 
-### ✅ Apache 设置（.htaccess）
-在项目根目录添加 `.htaccess` 文件：
+### ✅ Apache 重写 / Apache .htaccess
 ```apacheconf
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php [QSA,L]
 ```
-确保 Apache 开启了 `mod_rewrite` 模块，并允许 `.htaccess` 重写（`AllowOverride All`）。
+Enable `mod_rewrite` and make sure `AllowOverride All` is set.
 
 ---
 
-## 📂 缓存策略
-- 每张图像生成后自动保存为 `.jpg` 文件
-- 存储于 `/cache` 文件夹中，命名包含尺寸、颜色和文字哈希
-- 后续访问相同参数时直接读取缓存，加速响应
+## 📂 缓存策略 / Caching Strategy
+- 每张图像生成后自动保存为 JPG / JPG image is cached after generation
+- 缓存路径为 `/cache` 文件夹 / Stored in `/cache` folder
+- 相同请求会读取缓存，提升性能 / Identical requests load from cache
 
 ---
 
-## 🖋️ 水印说明
-- 默认右下角显示 `tendayspace` 标志
-- 字体颜色较淡（半透明）
+## 🖋️ 水印说明 / Watermark
+- 默认右下角显示 `tendayspace` / Shows `tendayspace` on bottom right
+- 半透明字体 / Semi-transparent font
 
 ---
 
